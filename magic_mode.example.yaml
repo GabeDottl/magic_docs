@@ -1,0 +1,8 @@
+# magic_mode configuration — example
+# Copy to magic_mode.yaml and edit with your paths.
+
+lookback_hours: 24
+
+repos:
+  - /path/to/your/repo
+  # - /path/to/another/repo
