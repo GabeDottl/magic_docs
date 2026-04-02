@@ -85,6 +85,12 @@ PROMPT_EOF
     --output-format text \
     2>&1 | tail -5)
 
+  # Commit any changed MAGIC DOC files.
+  (cd "$REPO" && \
+    git add $MAGIC_FILES 2>/dev/null && \
+    git diff --cached --quiet || \
+    git -C "$REPO" commit -m "Updated Magic Docs")
+
   echo "  Done: $REPO"
 done
 
