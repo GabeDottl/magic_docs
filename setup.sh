@@ -2,8 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_FILE="$SCRIPT_DIR/magic_mode.yaml"
-MAGIC_SCRIPT="$SCRIPT_DIR/magic_mode.sh"
+CONFIG_FILE="$SCRIPT_DIR/magic_docs.yaml"
+MAGIC_SCRIPT="$SCRIPT_DIR/magic_docs.sh"
 
 # Colors.
 BOLD='\033[1m'
@@ -16,7 +16,7 @@ RESET='\033[0m'
 
 header() {
   echo ""
-  echo -e "${BOLD}${CYAN}  ✦ Magic Mode Setup${RESET}"
+  echo -e "${BOLD}${CYAN}  ✦ Magic Docs Setup${RESET}"
   echo -e "${DIM}  Self-updating docs for your codebase${RESET}"
   echo ""
 }
@@ -133,7 +133,7 @@ collect_schedule() {
   divider
   echo ""
   echo -e "${BOLD}  3. Schedule${RESET}"
-  echo -e "  ${DIM}How often should Magic Mode run?${RESET}"
+  echo -e "  ${DIM}How often should Magic Docs run?${RESET}"
   echo ""
   echo -e "  ${BOLD}1${RESET})  Every 6 hours"
   echo -e "  ${BOLD}2${RESET})  Every 12 hours"
@@ -185,7 +185,7 @@ collect_schedule() {
       ;;
     6)
       SKIP_CRON=1
-      echo -e "  ${GREEN}✓${RESET} Manual mode — run with: ${DIM}./magic_mode.sh${RESET}"
+      echo -e "  ${GREEN}✓${RESET} Manual mode — run with: ${DIM}./magic_docs.sh${RESET}"
       ;;
     *)
       CRON_EXPR="0 0 * * *"
@@ -220,7 +220,7 @@ install_cron() {
   fi
 
   echo ""
-  LOG_FILE="$SCRIPT_DIR/magic_mode.log"
+  LOG_FILE="$SCRIPT_DIR/magic_docs.log"
   CRON_LINE="$CRON_EXPR $MAGIC_SCRIPT $CONFIG_FILE >> $LOG_FILE 2>&1"
 
   echo -e "  ${DIM}Cron entry:${RESET}"
@@ -232,7 +232,7 @@ install_cron() {
 
   if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
     # Remove any existing magic_mode cron entries, then add new one.
-    (crontab -l 2>/dev/null | grep -v "magic_mode.sh" || true; echo "$CRON_LINE") | crontab -
+    (crontab -l 2>/dev/null | grep -v "magic_docs.sh" || true; echo "$CRON_LINE") | crontab -
     echo -e "  ${GREEN}✓${RESET} Cron job installed"
     echo -e "  ${DIM}Logs: $LOG_FILE${RESET}"
   else
@@ -259,7 +259,7 @@ summary() {
     echo -e "  ${BOLD}Schedule:${RESET} manual"
   fi
   echo ""
-  echo -e "  Run now:  ${DIM}./magic_mode.sh${RESET}"
+  echo -e "  Run now:  ${DIM}./magic_docs.sh${RESET}"
   echo -e "  Reconfig: ${DIM}./setup.sh${RESET}"
   echo ""
 }

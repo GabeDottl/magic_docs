@@ -1,4 +1,4 @@
-# Magic Mode
+# Magic Docs
 
 Self-updating docs for your codebase, powered by Claude Code.
 
@@ -21,7 +21,7 @@ It can optionally have an italicized instruction line right after the header:
 *Keep this focused on high-level architecture, not line-by-line code docs.*
 ```
 
-Magic Mode scans your configured repos for these files, then runs Claude Code to update each one in place. The updates are:
+Magic Docs scans your configured repos for these files, then runs Claude Code to update each one in place. The updates are:
 
 - **Terse** — no fluff
 - **Architecture-focused** — overviews, entry points, design decisions
@@ -40,14 +40,14 @@ The interactive setup walks you through:
 2. Setting the lookback window (how many hours of git history to consider)
 3. Scheduling — pick a preset (every 6h, 12h, daily) or enter a custom cron expression
 
-It writes `magic_mode.yaml` and optionally installs a cron job for you.
+It writes `magic_docs.yaml` and optionally installs a cron job for you.
 
 ## Manual Setup
 
 If you prefer to configure by hand:
 
 1. Install [Claude Code](https://docs.anthropic.com/en/docs/claude-code): `npm install -g @anthropic-ai/claude-code`
-2. Edit `magic_mode.yaml`:
+2. Edit `magic_docs.yaml`:
 
 ```yaml
 lookback_hours: 24
@@ -57,11 +57,11 @@ repos:
 ```
 
 3. Drop `# MAGIC DOC: <title>` files into your repos (see `example_magic_doc.md`).
-4. Run: `./magic_mode.sh`
+4. Run: `./magic_docs.sh`
 
 ## How It Works
 
-1. Parses `magic_mode.yaml` for the list of repos and lookback window.
+1. Parses `magic_docs.yaml` for the list of repos and lookback window.
 2. For each repo, finds all `.md` files containing a `# MAGIC DOC:` header.
 3. Launches Claude Code (`--dangerously-skip-permissions`) with a prompt that:
    - Reads the git log for the last N hours

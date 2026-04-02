@@ -2,11 +2,11 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_FILE="${1:-$SCRIPT_DIR/magic_mode.yaml}"
+CONFIG_FILE="${1:-$SCRIPT_DIR/magic_docs.yaml}"
 
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "❌ Config not found: $CONFIG_FILE"
-  echo "Usage: magic_mode.sh [config.yaml]"
+  echo "Usage: magic_docs.sh [config.yaml]"
   exit 1
 fi
 
@@ -27,7 +27,7 @@ if [[ ${#REPOS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-echo "Magic Mode: scanning ${#REPOS[@]} repo(s), lookback=${LOOKBACK_HOURS}h"
+echo "Magic Docs: scanning ${#REPOS[@]} repo(s), lookback=${LOOKBACK_HOURS}h"
 
 for REPO in "${REPOS[@]}"; do
   if [[ ! -d "$REPO" ]]; then
@@ -79,15 +79,13 @@ PROMPT_EOF
 )
 
   echo "  Running Claude Code on $REPO..."
-  claude --dangerously-skip-permissions \
+  (cd "$REPO" && claude --dangerously-skip-permissions \
     -p "$PROMPT" \
-    --cwd "$REPO" \
     --model sonnet \
-    --max-turns 20 \
     --output-format text \
-    2>&1 | tail -5
+    2>&1 | tail -5)
 
   echo "  Done: $REPO"
 done
 
-echo "Magic Mode complete."
+echo "Magic Docs complete."
