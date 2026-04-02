@@ -1,6 +1,6 @@
 # Magic Docs
 
-Self-updating docs for your codebase, powered by Claude Code.
+Self-updating docs for your codebase, powered by Claude Code (or your favorite coding agent).
 
 ![Magic Docs concept from Claude Code](screenshot.png)
 
